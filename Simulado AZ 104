@@ -1,0 +1,240 @@
+Laboratório 01 - Gerenciar identidades de diretório ativo do Azure
+Manual do laboratório estudantil
+Cenário de laboratório
+Para permitir que os usuários do Contoso se autenticassem usando o Azure AD, você foi incumbido de provisionar usuários e contas em grupo. A adesão aos grupos deve ser atualizada automaticamente com base nos títulos de trabalho do usuário. Você também precisa criar um inquilino de Azure AD de teste com uma conta de usuário de teste e conceder a essa conta permissões limitadas aos recursos na assinatura Contoso Azure.
+
+Objectivos
+Neste laboratório, você vai:
+
+Tarefa 1: Criar e configurar usuários do Azure AD
+Tarefa 2: Criar grupos de AD do Azure com membros atribuídos e dinâmicos
+Tarefa 3: Crie um inquilino do Azure Active Directory (AD)
+Tarefa 4: Gerenciar usuários convidados do Azure AD
+Tempo estimado: 30 minutos
+Diagrama de arquitetura
+image
+
+Instruções
+Exercício 1
+Tarefa 1: Criar e configurar usuários do Azure AD
+Nesta tarefa, você criará e configurará usuários do Azure AD.
+
+Nota: Se você já usou anteriormente a licença de teste para o Azure AD Premium neste Inquilino Azure AD, você precisará de um novo Inquilino AD do Azure ou executará a Tarefa 2 após a Tarefa 3 naquele novo inquilino do Azure AD.
+
+Faça login no portal do Azure.
+
+No portal do Azure, procure e selecione o Diretório Ativo do Azure.
+
+Na lâmina do Diretório Ativo do Azure, role até a seção Gerenciar, clique nas configurações do usuárioe revise as opções de configuração disponíveis.
+
+Na lâmina diretório ativo do Azure, na seção Gerenciar, clique em Usuáriose clique em sua conta de usuário para exibir suas configurações de Perfil.
+
+Clique em editar, na seção Configurações, defina o local de uso para os Estados Unidos e clique em salvar para aplicar a alteração.
+
+Nota: Isso é necessário para atribuir uma licença Azure AD Premium P2 à sua conta de usuário mais tarde neste laboratório.
+
+Navegue de volta para os Usuários - Todos os usuários lâmina e, em seguida, clique em + Novo usuário.
+
+Crie um novo usuário com as seguintes configurações (deixe outros com seus padrões):
+
+Ambiente	Valor
+Nome do usuário	az104-01a-aaduser1
+Nome	az104-01a-aaduser1
+Deixe-me criar a senha	habilitado
+Senha inicial	Pa55w.rd124
+Localização de uso	Estados Unidos
+Cargo	Administrador de Nuvem
+Departamento	ELA
+Nota: Copiar para a área de transferência o nome principal completo do usuário (nome do usuário mais domínio). Você vai precisar dele mais tarde nesta tarefa.
+
+Na lista de usuários, clique na conta de usuário recém-criada para exibir sua lâmina.
+
+Revise as opções disponíveis na seção Gerenciar e observe que você pode identificar as funções do Azure AD atribuídas à conta do usuário, bem como as permissões da conta de usuário aos recursos do Azure.
+
+Na seção Gerenciar, clique em Atribuir funções, clique em + Adicionar botão de atribuição e atribua a função administrador do usuário ao az104-01a-aaduser1.
+
+Nota: Você também tem a opção de atribuir funções Azure AD ao provisionar um novo usuário.
+
+Abra uma janela do navegador InPrivate e faça login no portal do Azure usando a conta de usuário recém-criada. Quando solicitado a atualizar a senha, altere a senha para o usuário.
+
+Nota: Em vez de digitar o nome de usuário (incluindo o nome de domínio), você pode colar o conteúdo da Área de Transferência.
+
+Na janela do navegador InPrivate, no portal Azure, pesquise e selecione o Azure Active Directory.
+
+Nota: Embora esta conta de usuário possa acessar o inquilino do Azure Active Directory, ela não tem acesso aos recursos do Azure. Isso é esperado, uma vez que esse acesso precisaria ser concedido explicitamente usando o Controle de Acesso Baseado em Papel do Azure.
+
+Na janela do navegador InPrivate, na lâmina Azure AD, role até a seção Gerenciar, clique nas configurações do usuárioe observe que você não tem permissões para modificar nenhuma opção de configuração.
+
+Na janela do navegador InPrivate, na lâmina Azure AD, na seção Gerenciar, clique em Usuáriose clique em + Novo usuário.
+
+Crie um novo usuário com as seguintes configurações (deixe outros com seus padrões):
+
+Ambiente	Valor
+Nome do usuário	az104-01a-aaduser2
+Nome	az104-01a-aaduser2
+Deixe-me criar a senha	habilitado
+Senha inicial	Pa55w.rd124
+Localização de uso	Estados Unidos
+Cargo	Administrador do sistema
+Departamento	ELA
+Saia como o usuário az104-01a-aaduser1 do portal Azure e feche a janela do navegador InPrivate.
+
+Tarefa 2: Criar grupos de AD do Azure com membros atribuídos e dinâmicos
+Nesta tarefa, você criará grupos do Azure Active Directory com membros atribuídos e dinâmicos.
+
+De volta ao portal Azure, onde você está conectado com sua conta de usuário,navegue de volta para a lâmina de visão geral do inquilino Azure AD e, na seção Gerenciar, clique em Licenças.
+
+Nota: As licenças Azure AD Premium P1 ou P2 são necessárias para implementar grupos dinâmicos.
+
+Na seção Gerenciar, clique em Todos os produtos.
+
+Clique + Experimente/Compre e ative a avaliação gratuita do Azure AD Premium P2.
+
+Atualize a janela do navegador para verificar se a ativação foi bem sucedida.
+
+Das Licenças - Todos os produtos lâmina, selecione a entrada Azure Active Directory Premium P2 e atribua todas as opções de licença do Azure AD Premium P2 à sua conta de usuário e às duas contas de usuário recém-criadas.
+
+No portal Azure, navegue de volta para a lâmina de inquilino do Azure AD e clique em Grupos.
+
+Use o botão + Novo grupo para criar um novo grupo com as seguintes configurações:
+
+Ambiente	Valor
+Tipo de grupo	Segurança
+Nome do grupo	Administradores de nuvem de TI
+Descrição do grupo	Administradores de nuvem de TI contoso
+Tipo de associação	Usuário Dinâmico
+Nota: Se a lista suspensa do tipo Desatar está acinzentado, aguarde alguns minutos e atualize a página do navegador.
+
+Clique em Adicionar consulta dinâmica.
+
+Na guia Configurar regras da lâmina de regras de membros dinâmicos, crie uma nova regra com as seguintes configurações:
+
+Ambiente	Valor
+Propriedade	jobTitle
+Operador	Equals
+Valor	Administrador de Nuvem
+Salve a regra e, de volta na lâmina do Novo Grupo, clique em Criar.
+
+Back on the Groups - Todos os grupos lâmina do inquilino Azure AD, clique no botão + Novo grupo e crie um novo grupo com as seguintes configurações:
+
+Ambiente	Valor
+Tipo de grupo	Segurança
+Nome do grupo	Administradores de sistemas de TI
+Descrição do grupo	Administradores de sistemas de TI contoso
+Tipo de associação	Usuário Dinâmico
+Clique em Adicionar consulta dinâmica.
+
+Na guia Configurar regras da lâmina de regras de membros dinâmicos, crie uma nova regra com as seguintes configurações:
+
+Ambiente	Valor
+Propriedade	jobTitle
+Operador	Equals
+Valor	Administrador do sistema
+Salve a regra e, de volta na lâmina do Novo Grupo, clique em Criar.
+
+Back on the Groups - Todos os grupos lâmina do inquilino Azure AD, clique no botão + Novo grupo e crie um novo grupo com as seguintes configurações:
+
+Ambiente	Valor
+Tipo de grupo	Segurança
+Nome do grupo	Administradores de laboratório de TI
+Descrição do grupo	Administradores do Laboratório de TI Contoso
+Tipo de associação	Atribuído
+Clique em Nenhum membro selecionado.
+
+A partir da lâmina Adicionar membros, pesquise e selecione os administradores de nuvem de TI e os administradores do sistema de TI e, de volta na lâmina Do Novo Grupo, clique em Criar.
+
+De volta à lâmina Grupos - Todos os grupos, clique na entrada representando o grupo Administradores de Nuvem de TI e, em seguida, exiba a lâmina 'Membros'. Verifique se o az104-01a-aaduser1 aparece na lista de membros do grupo.
+
+Nota: Você pode sofrer atrasos com atualizações dos grupos de membros dinâmicos. Para acelerar a atualização, navegue até a lâmina do grupo, exiba a lâmina de regras de membros Dinâmicos, edite a regra listada na caixa de texto de sintaxe de regra adicionando um espaço branco no final e Salve a alteração.
+
+Navegue de volta para os grupos - Todos os grupos lâmina, clique na entrada representando o grupo Administradores do Sistema de TI e, em seguida, exibir sua lâmina Membros. Verifique se o az104-01a-aaduser2 aparece na lista de membros do grupo.
+
+Tarefa 3: Crie um inquilino do Azure Active Directory (AD)
+Nesta tarefa, você criará um novo inquilino do Azure AD.
+
+No portal do Azure, procure e selecione o Diretório Ativo do Azure.
+
+Clique em Gerenciar inquilinose, em seguida, na próxima tela, clique em + Criare especifique a seguinte configuração:
+
+Ambiente	Valor
+Tipo de diretório	Diretório Ativo do Azure
+Clique em seguir : Configuração
+
+Ambiente	Valor
+Nome da organização	Laboratório Contoso
+Nome de domínio inicial	qualquer nome DNS válido consistindo de letras e dígitos de caixa inferior e começando com uma letra
+País/Região	Estados Unidos
+Nota: O nome de domínio inicial não deve ser um nome legítimo que potencialmente corresponda à sua organização ou a outra. A marca de verificação verde na caixa de texto do nome de domínio inicial indicará que o nome de domínio digitado é válido e único.
+
+Clique em Review + crie e clique em Criar.
+
+Exibir a lâmina do recém-criado inquilino do Azure AD usando o Clique aqui para navegar até o seu novo inquilino: Link Contoso Lab ou o botão Diretório + Assinatura (diretamente à direita do botão Cloud Shell) na barra de ferramentas do portal Azure.
+
+Tarefa 4: Gerencie usuários convidados do Azure AD.
+Nesta tarefa, você criará usuários convidados do Azure AD e concederá-lhes acesso aos recursos em uma assinatura do Azure.
+
+No portal Azure que exibe o inquilino do Contoso Lab Azure AZure, na seção Gerenciar, clique em Usuários, e clique em + Novo usuário.
+
+Crie um novo usuário com as seguintes configurações (deixe outros com seus padrões):
+
+Ambiente	Valor
+Nome do usuário	az104-01b-aaduser1
+Nome	az104-01b-aaduser1
+Deixe-me criar a senha	habilitado
+Senha inicial	Pa55w.rd124
+Cargo	Administrador do sistema
+Departamento	ELA
+Clique no perfil recém-criado.
+
+Nota: Copiar para a área de transferência o nome principal completo do usuário (nome do usuário mais domínio). Você vai precisar dele mais tarde nesta tarefa.
+
+Mude de volta para o inquilino padrão do Azure AD usando o botão Diretório + Assinatura (diretamente à direita do botão Cloud Shell) na barra de ferramentas do portal Azure.
+
+Navegue de volta para os Usuários - Todos os usuários lâmina e, em seguida, clique em + Novo usuário convidado.
+
+Crie um novo usuário convidado com as seguintes configurações (deixe outros com seus padrões):
+
+Ambiente	Valor
+Nome	az104-01b-aaduser1
+Endereço eletrônico	o nome principal do usuário que você copiou anteriormente nesta tarefa
+Localização de uso	Estados Unidos
+Cargo	Administrador de laboratório
+Departamento	ELA
+Clique em Convidar.
+
+De volta aos Usuários - Todos os usuários lâmina, clique na entrada representando a conta de usuário convidado recém-criada.
+
+No az104-01b-aaduser1 - Lâmina de perfil, clique em Grupos.
+
+Clique em + Adicionar a assinatura e adicionar a conta de usuário convidado ao grupo de administradores do LABORATÓRIO de TI.
+
+Limpar recursos
+Nota: Lembre-se de remover quaisquer recursos Azure recém-criados que você não use mais. A remoção de recursos não usused garante que você não incorrerá em custos inesperados. Embora, neste caso, não haja taxas adicionais associadas aos inquilinos do Azure Active Directory e seus objetos, você pode querer considerar a remoção das contas de usuário, das contas do grupo e do inquilino do Azure Active Directory que você criou neste laboratório.
+
+No Portal Azure procure o Azure Active Directory na barra de pesquisa. Dentro do Diretório Ativo do Azure em Gerenciar licenças selecionadas. Uma vez em Licenças em Gerenciar selecione Todos os Produtos e selecione o item P2 Premium P2 do Azure Active Directory na lista. Proceda até então selecionando usuários licenciados. Selecione as contas de usuário az104-01a-aaduser1 e az104-01a-aaduser2 para as quais você atribuiu licenças neste laboratório, clique em Remover licençae, quando solicitado a confirmar, clique em OK.
+
+No portal Azure, navegue até a lâmina usuários - Todos os usuários, clique na entrada representando a conta de usuário convidado az104-01b-aaduser1, no az104-01b-aaduser1 - Perfil da lâmina clique em Excluir, e, quando solicitado a confirmar, clique em OK.
+
+Repita a mesma sequência de etapas para excluir as contas de usuário restantes criadas neste laboratório.
+
+Navegue até os grupos - Todos os grupos lâmina, selecione os grupos que você criou neste laboratório, clique em Excluire, quando solicitado para confirmar, clique em OK.
+
+No portal Azure, exiba a lâmina do inquilino do Azure do Laboratório Contoso usando o botão Diretório + Assinatura (diretamente à direita do botão Cloud Shell) na barra de ferramentas do portal Azure.
+
+Navegue até a lâmina de usuários - Todos os usuários lâmina, clique na entrada representando a conta de usuário az104-01b-aaduser1, no az104-01b-aaduser1 - Perfil da lâmina clique em Excluir, e, quando solicitado a confirmar, clique em OK.
+
+Navegue até o Laboratório Contoso - Lâmina de visão geral do inquilino do Azure do Laboratório Contoso, clique em Gerenciar inquilino e, em seguida, na próxima tela, clique em Excluir inquilino,clique na permissão para excluir o link de recursos do Azure, na lâmina Propriedades do Diretório Ativo do Azure, defina o gerenciamento de acesso para recursos do Azure para Sim e clique em Salvar.
+
+Saia do portal Azure e faça login lá atrás.
+
+Navegue de volta para a lâmina 'Contoso Lab' do inquilino Excluir e clique em Excluir.
+
+Nota: Você terá que esperar o término da licença de teste antes de poder excluir o inquilino. Isso não incorre em nenhum custo adicional.
+
+Revisar
+Neste laboratório, você tem:
+
+Usuários de AD criados e configurados
+Criados grupos Azure AD com membros atribuídos e dinâmicos
+Criou um inquilino do Azure Active Directory (AD)
+Usuários convidados do Azure AD gerenciados
